@@ -13,18 +13,6 @@ from numpy.random import randint
 import yaml
 pd.options.mode.chained_assignment = None  # default='warn'
 
-base_dataset = 'C:\\Coding\\201_SeamsModel\\images\\train\\Seams'  # path
-manifest = os.path.join(base_dataset, 'vott-csv-export', 'manifest.txt')
-multi_df = pd.read_csv(os.path.join(base_dataset, 'vott-csv-export', 'Seams-export.csv'))
-labels = multi_df["label"].unique()
-labeldict = dict(zip(labels, range(len(labels))))
-multi_df.drop_duplicates(subset=None, keep="first", inplace=True)
-split_ratio = 0.2
-split_val = os.path.join(base_dataset, 'vott-csv-export', 'validation.txt')
-split_train = os.path.join(base_dataset, 'vott-csv-export', 'training.txt')
-classes_file = os.path.join(base_dataset, 'vott-csv-export', 'classes.names')
-yaml_file = os.path.join(base_dataset, 'vott-csv-export', "seams.yaml")  # yaml file location
-
 
 def manifest_generator(vott_df, manifest_target, path):
     images_name = vott_df['image'].unique()
@@ -79,7 +67,7 @@ def csv2darknet(vott_df, labeldict, path):
     return True
 
 
-def split_manifest(split=split_ratio, manifest_target=manifest, val=split_val, train=split_train):
+def split_manifest(split=0.1, manifest_target='', val='', train=''):
     other_percentage = 1 - split
     f = open(manifest_target, "r")  # manifest.txt, a list with all the images
     lines = f.readlines()
@@ -89,12 +77,10 @@ def split_manifest(split=split_ratio, manifest_target=manifest, val=split_val, t
 
     total_lines = len(lines)
     num_val = int(split * total_lines)
-    print(num_val)
     num_train = int(total_lines - num_val)
-    print(num_train)
 
     seed(5)
-    lines_out = []
+    lines_out = []  # list with the lines that will be removed later
     random_line = randint(0, total_lines, num_val)  # Vector with all the images (lines) we will use for validation
     #  print(random_line)
     f2 = open(val, 'w')
@@ -113,7 +99,7 @@ def split_manifest(split=split_ratio, manifest_target=manifest, val=split_val, t
     # print(len(lines), len(lines_out), len(training_lines))
 
 
-def updateYaml(classes=classes_file, val=split_val, train=split_train, yml=yaml_file):
+def updateYaml(classes, val, train, yml):
     names = [line.rstrip() for line in open(classes, 'r')]
     nc = len(names)
     data = {
@@ -133,7 +119,23 @@ def updateYaml(classes=classes_file, val=split_val, train=split_train, yml=yaml_
         print(f'INFO: {aux} updated')
 
 
-manifest_generator(multi_df, manifest_target=manifest, path=base_dataset)
-csv2darknet(multi_df, labeldict, path=base_dataset)
-split_manifest()
-updateYaml()
+if __name__ == "__main__":
+
+    # Parameters
+    base_dataset = 'C:\\Coding\\201_SeamsModel\\images\\train\\Seams'  # path
+    manifest = os.path.join(base_dataset, 'vott-csv-export', 'manifest.txt')
+    multi_df = pd.read_csv(os.path.join(base_dataset, 'vott-csv-export', 'Seams-export.csv'))
+    labels = multi_df["label"].unique()
+    labeldict = dict(zip(labels, range(len(labels))))
+    multi_df.drop_duplicates(subset=None, keep="first", inplace=True)
+    split_ratio = 0.2
+    split_val = os.path.join(base_dataset, 'vott-csv-export', 'validation.txt')
+    split_train = os.path.join(base_dataset, 'vott-csv-export', 'training.txt')
+    classes_file = os.path.join(base_dataset, 'vott-csv-export', 'classes.names')
+    yaml_file = os.path.join(base_dataset, 'vott-csv-export', "seams.yaml")  # yaml file location
+
+    # Calls
+    manifest_generator(multi_df, manifest_target=manifest, path=base_dataset)
+    csv2darknet(multi_df, labeldict, path=base_dataset)
+    split_manifest(split=0.2, manifest_target=manifest, val=split_val, train=split_train)
+    updateYaml(classes=classes_file, val=split_val, train=split_train, yml=yaml_file)
