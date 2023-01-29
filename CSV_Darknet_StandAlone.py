@@ -121,18 +121,19 @@ def updateYaml(classes, val, train, yml):
 
 if __name__ == "__main__":
 
-    # Parameters
+    # Basic Parameters
     base_dataset = 'C:\\Coding\\201_SeamsModel\\images\\train\\Seams'  # path
     manifest = os.path.join(base_dataset, 'vott-csv-export', 'manifest.txt')
     multi_df = pd.read_csv(os.path.join(base_dataset, 'vott-csv-export', 'Seams-export.csv'))
-    labels = multi_df["label"].unique()
-    labeldict = dict(zip(labels, range(len(labels))))
-    multi_df.drop_duplicates(subset=None, keep="first", inplace=True)
-    split_ratio = 0.2
+    # Dataset split Parameters
     split_val = os.path.join(base_dataset, 'vott-csv-export', 'validation.txt')
     split_train = os.path.join(base_dataset, 'vott-csv-export', 'training.txt')
     classes_file = os.path.join(base_dataset, 'vott-csv-export', 'classes.names')
     yaml_file = os.path.join(base_dataset, 'vott-csv-export', "seams.yaml")  # yaml file location
+    # Variables
+    labels = multi_df["label"].unique()
+    labeldict = dict(zip(labels, range(len(labels))))
+    multi_df.drop_duplicates(subset=None, keep="first", inplace=True)
 
     # Calls
     manifest_generator(multi_df, manifest_target=manifest, path=base_dataset)
