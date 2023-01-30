@@ -17,7 +17,7 @@ def list_files(startpath):
 
 def find_and_move(base, file, target):
     file_noextension = file.split('.')[0]
-    result = glob.glob(f'{base}/**/{file_noextension}.bmp', recursive=True)  # a list, i take the first element
+    result = glob.glob(f'{base}/**/{file_noextension}.bmp', recursive=True)  # a list, I take the first element
     final_target = f'{target}\\{file_noextension}.bmp'
     shutil.move(result[0], final_target)
     print(f'moved: {file_noextension}.bmp')
