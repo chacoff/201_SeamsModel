@@ -23,15 +23,15 @@ def find_and_move(base, file, target):
     print(f'moved: {file_noextension}.bmp')
 
 
-# list_files('C:\\Coding\\201_SeamsModel\\images')
+if __name__ == '__main__':
 
-base = 'C:\\Users\\gomezja\\PycharmProjects\\Tmb\\00_JG-SB_Validation01_2022_02_11-28'
-target = 'C:\\Users\\gomezja\\PycharmProjects\\201_SeamsModel\\images\\valid\\Seams'
+    base = 'D:\\PyCharmProjects\\201_SeamsModel\\images\\train\\NoSeams'
+    target = 'D:\\PycharmProjects\\201_SeamsModel\\images\\valid\\noSeams'
 
-file1 = open('images\\valid_seams.txt', 'r')
-Lines = file1.readlines()
+    file1 = open('images\\valid_noseams.txt', 'r')
+    Lines = file1.readlines()
 
-for line in Lines:
-    l = format(line.strip())
-    find_and_move(base, l, target)
+    for line in Lines:
+        l = format(line.strip())
+        find_and_move(base, l, target)
 
