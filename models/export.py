@@ -21,9 +21,9 @@ from utils.torch_utils import select_device
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='./yolov5s.pt', help='weights path')  # from yolov5/models/
-    parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='image size')  # height, width
-    parser.add_argument('--batch-size', type=int, default=1, help='batch size')
+    parser.add_argument('--weights', type=str, default='../runs/train/exp2/weights/best.pt', help='weights path')  # from yolov5/models/
+    parser.add_argument('--img-size', nargs='+', type=int, default=[768, 768], help='image size')  # height, width
+    parser.add_argument('--batch-size', type=int, default=16, help='batch size')
     parser.add_argument('--dynamic', action='store_true', help='dynamic ONNX axes')
     parser.add_argument('--grid', action='store_true', help='export Detect() layer grid')
     parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
