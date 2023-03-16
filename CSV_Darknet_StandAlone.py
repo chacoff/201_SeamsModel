@@ -122,21 +122,21 @@ def updateYaml(classes, val, train, yml):
 if __name__ == "__main__":
 
     # Basic Parameters
-    base_dataset = 'C:\\Coding\\201_SeamsModel\\images\\train\\Seams'  # path
-    manifest = os.path.join(base_dataset, 'vott-csv-export', 'manifest.txt')
-    multi_df = pd.read_csv(os.path.join(base_dataset, 'vott-csv-export', 'Seams-export.csv'))
+    base_dataset = 'D:\\PyCharmProjects\\201_SeamsModel\\images\\train'  # path
+    manifest = os.path.join(base_dataset, 'vott-manifest', 'manifest.txt')
+    multi_df = pd.read_csv(os.path.join(base_dataset, 'vott-manifest', 'Seams-export.csv'))
     # Dataset split Parameters
-    split_val = os.path.join(base_dataset, 'vott-csv-export', 'validation.txt')
-    split_train = os.path.join(base_dataset, 'vott-csv-export', 'training.txt')
-    classes_file = os.path.join(base_dataset, 'vott-csv-export', 'classes.names')
-    yaml_file = os.path.join(base_dataset, 'vott-csv-export', "seams.yaml")  # yaml file location
+    split_val = os.path.join(base_dataset, 'vott-manifest', 'validation.txt')
+    split_train = os.path.join(base_dataset, 'vott-manifest', 'training.txt')
+    classes_file = os.path.join(base_dataset, 'vott-manifest', 'classes.names')
+    yaml_file = os.path.join(base_dataset, 'vott-manifest', "seams.yaml")  # yaml file location
     # Variables
     labels = multi_df["label"].unique()
     labeldict = dict(zip(labels, range(len(labels))))
     multi_df.drop_duplicates(subset=None, keep="first", inplace=True)
 
     # Calls
-    manifest_generator(multi_df, manifest_target=manifest, path=base_dataset)
-    csv2darknet(multi_df, labeldict, path=base_dataset)
+    manifest_generator(multi_df, manifest_target=manifest, path=base_dataset+'\\Seams')
+    csv2darknet(multi_df, labeldict, path=base_dataset+'\\Seams')
     split_manifest(split=0.2, manifest_target=manifest, val=split_val, train=split_train)
     updateYaml(classes=classes_file, val=split_val, train=split_train, yml=yaml_file)
