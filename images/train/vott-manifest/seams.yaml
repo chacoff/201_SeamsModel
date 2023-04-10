@@ -1,0 +1,8 @@
+train: D:\PyCharmProjects\201_SeamsModel\images\train\vott-manifest\training.txt
+val: D:\PyCharmProjects\201_SeamsModel\images\train\vott-manifest\validation.txt
+nc: 4
+names:
+- Seams
+- Beam
+- Souflure
+- Hole
