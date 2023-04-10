@@ -149,8 +149,8 @@ def detect(save_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp2/weights/best.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='images/valid/Seams/ZH022_2070_206340_TX000009.bmp', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp3/weights/best.pt', help='model.pt path(s)')
+    parser.add_argument('--source', type=str, default='D:/Projects/00_Datasets/detect', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=768, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.15, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.10, help='IOU threshold for NMS')
