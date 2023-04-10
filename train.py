@@ -455,9 +455,9 @@ def train(hyp, opt, device, tb_writer=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='weights/yolov5s.pt', help='initial weights path')
+    parser.add_argument('--weights', type=str, default='weights/yolov5s.pt', help='initial weights path')  # 5s
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
-    parser.add_argument('--data', type=str, default='images/train/Seams/vott-csv-export/seams.yaml', help='data.yaml path')
+    parser.add_argument('--data', type=str, default='images/train/seams.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=31)
     parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')
@@ -474,7 +474,7 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--multi-scale', action='store_true', help='vary img-size +/- 50%%')
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
-    parser.add_argument('--adam', action='store_true', default=True, help='use torch.optim.Adam() optimizer')
+    parser.add_argument('--adam', action='store_true', default=False, help='use torch.optim.Adam() optimizer')
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
     parser.add_argument('--local_rank', type=int, default=-1, help='DDP parameter, do not modify')
     parser.add_argument('--workers', type=int, default=8, help='maximum number of dataloader workers')

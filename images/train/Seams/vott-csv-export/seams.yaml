@@ -1,6 +1,0 @@
-train: C:\Coding\201_SeamsModel\images\train\Seams\vott-csv-export\training.txt
-val: C:\Coding\201_SeamsModel\images\train\Seams\vott-csv-export\validation.txt
-nc: 2
-names:
-- Seams
-- Beam
