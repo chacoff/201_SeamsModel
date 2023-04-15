@@ -11,9 +11,10 @@ import yaml
 import numpy as np
 from numpy.random import seed
 from numpy.random import randint
+import shutil
 
 
-def manifest_generator(param): #(vott_df, manifest_target, path):
+def manifest_generator(param):
     path = param.get('base')+param.get('train')
     manifest = param.get('base')+param.get('manifest')
     images_name = [x for x in os.listdir(path) if x.endswith(param.get('image_filter'))]
@@ -87,19 +88,42 @@ def updateYaml(param):
         print(f'INFO: {aux} updated')
 
 
+def mover(param):
+    path = param.get('base')+param.get('train')
+    dst = param.get('base')+param.get('destination')
+    images_name = [x for x in os.listdir(path) if x.endswith(param.get('annotation_filter'))]
+
+    pbar = tqdm(total=len(images_name))
+    for i in range(len(images_name)):
+        single_txt_source = os.path.join(path, images_name[i])
+        single_image_source = os.path.join(path, images_name[i]).split('.')[0] + '.bmp'
+        single_txt_dst = os.path.join(dst, images_name[i])
+        single_image_dst = os.path.join(dst, images_name[i]).split('.')[0] + '.bmp'
+
+        shutil.move(single_txt_source, single_txt_dst)
+        shutil.move(single_image_source, single_image_dst)
+
+        pbar.update(1)
+    pbar.close()
+    print('INFO: Total number of images: %s' % len(images_name))
+
+
 if __name__ == "__main__":
     parameters = {
-        'base': 'D:\\Projects\\00_Datasets\\',
-        'train': 'Seams',
+        'base': 'D:\\PyCharmProjects\\201_SeamsModel\\dataset\\Seams\\',
+        'destination': 'Reference',
+        'train': 'training',
         'manifest': 'manifest.txt',
         'manifest_validation': 'validation.txt',
         'manifest_training': 'training.txt',
-        'image_filter': '.png',
-        'split': 0.25,
-        'classes': ['Seams', 'Beam'],
+        'image_filter': '.bmp',
+        'annotation_filter': '.txt',
+        'split': 0.20,
+        'classes': ['Seams', 'Beam', 'Souflure', 'Hole'],
         'yml': 'seams.yaml'
     }
 
+    #mover(parameters)
     manifest_generator(parameters)
     split_manifest(parameters)
     updateYaml(parameters)

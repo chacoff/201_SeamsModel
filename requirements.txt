@@ -1,5 +1,8 @@
 #python train.py --img 640 --batch 16 --epochs 15 --data dataset/vott-csv-export/tesis.yaml --weights yolov5s.pt --nosave --cache
 #conda install pytorch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 cpuonly -c pytorch
+#conda install pytorch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 cudatoolkit=10.2 -c pytorch
+#seamstmb conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
+#conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge
 
 # pip install -r requirements.txt
 
