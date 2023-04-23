@@ -119,7 +119,7 @@ if __name__ == "__main__":
         'image_filter': '.bmp',
         'annotation_filter': '.txt',
         'split': 0.20,
-        'classes': ['Seams', 'Beam', 'Souflure', 'Hole'],
+        'classes': ['Seams', 'Beam', 'Souflure', 'Hole', 'Water'],
         'yml': 'seams.yaml'
     }
 
