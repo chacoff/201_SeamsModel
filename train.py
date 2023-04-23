@@ -462,7 +462,7 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=51)
     parser.add_argument('--batch-size', type=int, default=8, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[768, 768], help='[train, test] image sizes multiple of 32')
-    parser.add_argument('--name', default='exp13', help='save to project/name')
+    parser.add_argument('--name', default='exp14', help='save to project/name')
     parser.add_argument('--workers', type=int, default=4, help='maximum number of dataloader workers default is 8')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
