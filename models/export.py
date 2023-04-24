@@ -21,7 +21,7 @@ from utils.torch_utils import select_device
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='../runs/train/exp14_weighted/weights/best.pt', help='weights path')  # from yolov5/models/
+    parser.add_argument('--weights', type=str, default='D:/PyCharmProjects/201_SeamsModel/runs/train/exp14/weights/best.pt', help='weights path')  # from yolov5/models/
     parser.add_argument('--img-size', nargs='+', type=int, default=[768, 768], help='image size')  # height, width
     parser.add_argument('--batch-size', type=int, default=1, help='batch size')
     parser.add_argument('--dynamic', action='store_true', default=False, help='dynamic ONNX axes')
