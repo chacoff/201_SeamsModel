@@ -1,5 +1,5 @@
 """
-ManifestGenerator to YOLOv5
+ManifestGenerator to YOLOv5-Seams
 April 10 2023
 J.
 """
@@ -15,14 +15,22 @@ import shutil
 
 
 def manifest_generator(param):
-    path = param.get('base')+param.get('train')
-    manifest = param.get('base')+param.get('manifest')
-    images_name = [x for x in os.listdir(path) if x.endswith(param.get('image_filter'))]
+
+    total_lists = []
+    for clas in param.get('folder_class'):
+        path = os.path.join(param.get('base'), clas)
+        list_per_folder = [x for x in os.listdir(path) if x.endswith(param.get('image_filter'))]
+        complete_list = [clas+'\\' + x for x in list_per_folder]
+        total_lists.append(complete_list)
+
+    images_name = sum(total_lists, [])
+    manifest = os.path.join(param.get('base'), param.get('manifest'))
 
     pbar = tqdm(total=len(images_name))
     for i in range(len(images_name)):
         file = open(manifest, 'a+')
-        file.write(os.path.join(path, images_name[i])+'\n')
+        image_i = str(os.path.join(param.get('base'), images_name[i]))
+        file.write(image_i+'\n')
         file.close()
         pbar.update(1)
     pbar.close()
@@ -30,9 +38,9 @@ def manifest_generator(param):
 
 
 def split_manifest(param):
-    manifest = param.get('base') + param.get('manifest')
-    manifest_validation = param.get('base') + param.get('manifest_validation')
-    manifest_training = param.get('base') + param.get('manifest_training')
+    manifest = os.path.join(param.get('base'), param.get('manifest'))
+    manifest_validation = os.path.join(param.get('base'), param.get('manifest_validation'))
+    manifest_training = os.path.join(param.get('base'), param.get('manifest_training'))
 
     other_percentage = 1 - param.get('split')
 
@@ -66,23 +74,20 @@ def split_manifest(param):
 
 
 def updateYaml(param):
-    yml = param.get('base')+param.get('yml')
+    yml = os.path.join(param.get('base'), param.get('yml'))
     # names = [line.rstrip() for line in open(classes, 'r')]
-    names = param.get('classes')
-    nc = len(names)
 
     data = {
-        'train': param.get('base')+param.get('manifest_training'),
-        'val': param.get('base')+param.get('manifest_validation'),
-        'nc': nc,
-        'names': names
+        'train': os.path.join(param.get('base'), param.get('manifest_training')),
+        'val': os.path.join(param.get('base'), param.get('manifest_validation')),
+        'nc': len(param.get('classes')),
+        'names': param.get('classes')
     }
     with open(yml, 'w') as f:
         yaml.dump(data, stream=f, default_flow_style=False, sort_keys=False)
 
     with open(yml, 'r') as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
-        print('INFO: Classes: %s' % data['nc'])
         print('INFO: Classes are: %s' % data['names'])
         aux = yml.split('\\')[-1]
         print(f'INFO: {aux} updated')
@@ -110,9 +115,9 @@ def mover(param):
 
 if __name__ == "__main__":
     parameters = {
-        'base': 'D:\\PyCharmProjects\\201_SeamsModel\\dataset\\Seams\\',
+        'base': 'D:\\PyCharmProjects\\201_SeamsModel\\dataset',
+        'folder_class': ['Seams', 'Hole'],
         'destination': 'Reference',
-        'train': 'training',
         'manifest': 'manifest.txt',
         'manifest_validation': 'validation.txt',
         'manifest_training': 'training.txt',
@@ -123,7 +128,7 @@ if __name__ == "__main__":
         'yml': 'seams.yaml'
     }
 
-    #mover(parameters)
+    # mover(parameters)
     manifest_generator(parameters)
     split_manifest(parameters)
     updateYaml(parameters)
