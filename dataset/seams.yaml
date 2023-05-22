@@ -1,0 +1,9 @@
+train: D:\PyCharmProjects\201_SeamsModel\dataset\training.txt
+val: D:\PyCharmProjects\201_SeamsModel\dataset\validation.txt
+nc: 5
+names:
+- Seams
+- Beam
+- Souflure
+- Hole
+- Water

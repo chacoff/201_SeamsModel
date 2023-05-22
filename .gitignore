@@ -259,11 +259,3 @@ fabric.properties
 /Graphs.ipynb
 /weights/
 /runs/
-exp3
-/dataset/
-/images/
-torch.txt
-notes.txt
-Onnx_export.PNG
-Training_env.PNG
-/Dochelpers/
